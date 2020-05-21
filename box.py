@@ -25,5 +25,5 @@ while len(spheres) < 10:
          np.random.uniform(sphereRadius, boxLength-sphereRadius),
          np.random.uniform(sphereRadius, boxLength-sphereRadius)])
 
-    if any([abs(item[0]-coordinate[0]) > sphereRadius*2 and abs(item[1]-coordinate[1]) > sphereRadius*2 and abs(item[2]-coordinate[2]) > sphereRadius*2] for item in spheres):
+    if any([abs(item[i]-coordinate[i]) > sphereRadius*2] for i in range(3) for item in spheres):
         spheres.append(coordinate)
