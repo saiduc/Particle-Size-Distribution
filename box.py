@@ -41,7 +41,7 @@ class Box:
             for item in spheres:
                 if np.sqrt((item[0]-coordinate[0])**2 +
                            (item[1]-coordinate[1])**2 +
-                           (item[2]-coordinate[2])**2) >= 2*radius:
+                           (item[2]-coordinate[2])**2) > 2*radius:
                     check += 0
                 else:
                     check += 1

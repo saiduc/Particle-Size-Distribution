@@ -18,7 +18,7 @@ def plotHist(data, R0, nbins=10):
 
 if __name__ == '__main__':
     box = Box(20)
-    box.populate(0.7, 100)
+    box.populate(0.7, 500)
 
     box.addPlane(0, 1, -1, 0)
     box.plotBox()
