@@ -23,7 +23,8 @@ class Box:
         coordinate = np.array(
             [np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
              np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
-             np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius)])
+             np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
+             radius])
 
         spheres = [coordinate]
 
@@ -31,7 +32,8 @@ class Box:
             coordinate = np.array(
                 [np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
                  np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
-                 np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius)])
+                 np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
+                 radius])
 
             appended = False
             for item in spheres:
@@ -53,11 +55,43 @@ class Box:
 
         if hasattr(self, "plane"):
             ax.plot_surface(self.plane[0], self.plane[1], self.plane[2])
-
         plt.show()
 
-    def addPlane(self):
-        (x, y, z) = np.meshgrid(np.arange(0, self.boxLength+0.1, 1),
-                                np.arange(0, self.boxLength+0.1, 1))
-        z = x+y
+    def addPlane(self, A, B, C, D):
+        self.planeCoeffs = [A, B, C, D]
+        (x, y) = np.meshgrid(np.linspace(0, 20, 1000),
+                             np.linspace(0, 20, 1000))
+
+        z = (A*x + B*y - D)/(-C)
         self.plane = [x, y, z]
+
+    def calcCrossSections(self):
+
+        A = self.planeCoeffs[0]
+        B = self.planeCoeffs[1]
+        C = self.planeCoeffs[2]
+        D = self.planeCoeffs[3]
+
+        radii = []
+        centres = []
+
+        for coordinate in self.coordinates:
+            x0 = coordinate[0]
+            y0 = coordinate[1]
+            z0 = coordinate[2]
+            radius = coordinate[3]
+
+            rho = (A*x0 + B*y0 + C*z0 - D)/np.sqrt(A**2 + B**2 + C**2)
+
+            if -radius < rho < radius:
+                r = np.sqrt(radius**2 - rho**2)
+                radii.append(r)
+
+                cx = x0 + rho * A/np.sqrt(A**2 + B**2 + C**2)
+                cy = y0 + rho * B/np.sqrt(A**2 + B**2 + C**2)
+                cz = z0 + rho * C/np.sqrt(A**2 + B**2 + C**2)
+
+                centres.append([cx, cy, cz])
+
+        self.centres = centres
+        self.crossSections = radii
