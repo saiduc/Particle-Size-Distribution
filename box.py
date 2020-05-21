@@ -13,7 +13,6 @@ class Box:
 
     def populate(self, radius, numberSpheres):
 
-        self.sphereRadius = radius
         self.N = numberSpheres
 
         if self.boxLength < 2 * self.sphereRadius:
@@ -21,30 +20,42 @@ class Box:
             return
 
         coordinate = np.array(
-            [np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
-             np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
-             np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
+            [np.random.uniform(radius, self.boxLength-radius),
+             np.random.uniform(radius, self.boxLength-radius),
+             np.random.uniform(radius, self.boxLength-radius),
              radius])
 
         spheres = [coordinate]
 
-        while len(spheres) < self.N:
+        count = 0
+        while len(spheres) < self.N and count < 1000000000000:
+            count += 1
             coordinate = np.array(
-                [np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
-                 np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
-                 np.random.uniform(self.sphereRadius, self.boxLength-self.sphereRadius),
+                [np.random.uniform(radius, self.boxLength-radius),
+                 np.random.uniform(radius, self.boxLength-radius),
+                 np.random.uniform(radius, self.boxLength-radius),
                  radius])
 
-            appended = False
+            check = 0
+            # for item in spheres:
+            #     if abs(item[0]-coordinate[0]) > self.sphereRadius*2 and \
+            #        abs(item[1]-coordinate[1]) > self.sphereRadius*2 and \
+            #        abs(item[2]-coordinate[2]) > self.sphereRadius*2:
+            #         check += 0
+            #     else:
+            #         check += 1
             for item in spheres:
-                if abs(item[0]-coordinate[0]) > self.sphereRadius*2 and \
-                   abs(item[1]-coordinate[1]) > self.sphereRadius*2 and \
-                   abs(item[2]-coordinate[2]) > self.sphereRadius*2 and \
-                   appended is False:
-                    spheres.append(coordinate)
-                    appended = True
-                    break
+                if np.sqrt((item[0]-coordinate[0])**2 + \
+                           (item[1]+coordinate[1])**2 + \
+                           (item[2]+coordinate[2])**2) >= 2*radius:
+                    check += 0
+                else:
+                    check +=1
 
+            if check == 0:
+                spheres.append(coordinate)
+
+        print("placed", len(spheres), "balls")
         self.coordinates = spheres
 
     def plotBox(self):
@@ -52,15 +63,20 @@ class Box:
         ax = fig.add_subplot(111, projection='3d')
         for coordinate in self.coordinates:
             ax.scatter(coordinate[0], coordinate[1], coordinate[2], c='blue')
+            (xs,ys,zs) = drawSphere(coordinate[0], coordinate[1], coordinate[2],self.sphereRadius)
+            ax.plot_wireframe(xs, ys, zs)
 
         if hasattr(self, "plane"):
             ax.plot_surface(self.plane[0], self.plane[1], self.plane[2])
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_zlabel('z')
         plt.show()
 
     def addPlane(self, A, B, C, D):
         self.planeCoeffs = [A, B, C, D]
-        (x, y) = np.meshgrid(np.linspace(0, 20, 1000),
-                             np.linspace(0, 20, 1000))
+        (x, y) = np.meshgrid(np.linspace(0, self.boxLength, 1000),
+                             np.linspace(0, self.boxLength, 1000))
 
         z = (A*x + B*y - D)/(-C)
         self.plane = [x, y, z]
@@ -83,7 +99,7 @@ class Box:
 
             rho = (A*x0 + B*y0 + C*z0 - D)/np.sqrt(A**2 + B**2 + C**2)
 
-            if -radius < rho < radius:
+            if abs(rho) < radius:
                 r = np.sqrt(radius**2 - rho**2)
                 radii.append(r)
 
@@ -95,3 +111,43 @@ class Box:
 
         self.centres = centres
         self.crossSections = radii
+
+    # def calcCrossSections(self):
+
+    #     radii = []
+
+    #     for coordinate in self.coordinates:
+    #         # x0 = coordinate[0]
+    #         # y0 = coordinate[1]
+    #         z0 = coordinate[2]
+    #         r = coordinate[3]
+
+    #         if z0 < 10:
+    #             if z0 + 0.7 >= 10:
+    #                 # tmp = np.sqrt(r**2 - ((A*x0 + B*y0 + C*z0 -D)**2)/(A**2 + B**2 + C**2))
+    #                 h = r - 10 + z0
+    #                 tmp = np.sqrt(2*r*h - h**2)
+    #                 radii.append(tmp)
+
+    #         if z0 > 10:
+    #             if z0 - 0.7 <= 10:
+    #                 # tmp = np.sqrt(r**2 - ((A*x0 + B*y0 + C*z0 -D)**2)/(A**2 + B**2 + C**2))
+    #                 h = r + 10 - z0
+    #                 tmp = np.sqrt(2*r*h - h**2)
+    #                 radii.append(tmp)
+
+    #     self.crossSections = radii
+
+
+
+def drawSphere(xCenter, yCenter, zCenter, r):
+    #draw sphere
+    u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
+    x=np.cos(u)*np.sin(v)
+    y=np.sin(u)*np.sin(v)
+    z=np.cos(v)
+    # shift and scale sphere
+    x = r*x + xCenter
+    y = r*y + yCenter
+    z = r*z + zCenter
+    return (x,y,z)
