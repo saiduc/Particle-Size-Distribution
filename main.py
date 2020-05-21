@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 def psi(x, R0):
-    return x * (R0**2 - x**2)**(0.5)
+    return x * (R0**2 - x**2)**(-0.5)
 
 
 def plotHist(data, R0, nbins=10):
@@ -16,12 +16,13 @@ def plotHist(data, R0, nbins=10):
 
     plt.show()
 
+
 if __name__ == '__main__':
     box = Box(20)
     box.populate(0.7, 500)
 
     box.addPlane(0, 1, -1, 0)
-    box.plotBox()
+    # box.plotBox()
 
     box.calcCrossSections()
 
@@ -29,4 +30,4 @@ if __name__ == '__main__':
     print(crossSections)
     centres = box.centres
 
-    plotHist(crossSections, 0.7, 20)
+    plotHist(crossSections, 0.7, 15)
