@@ -29,7 +29,7 @@ class Box:
         spheres = [coordinate]
 
         count = 0
-        while len(spheres) < self.N and count < 1000000000000:
+        while len(spheres) < self.N and count < 10000000:
             count += 1
             coordinate = np.array(
                 [np.random.uniform(radius, self.boxLength-radius),
@@ -38,20 +38,13 @@ class Box:
                  radius])
 
             check = 0
-            # for item in spheres:
-            #     if abs(item[0]-coordinate[0]) > self.sphereRadius*2 and \
-            #        abs(item[1]-coordinate[1]) > self.sphereRadius*2 and \
-            #        abs(item[2]-coordinate[2]) > self.sphereRadius*2:
-            #         check += 0
-            #     else:
-            #         check += 1
             for item in spheres:
-                if np.sqrt((item[0]-coordinate[0])**2 + \
-                           (item[1]-coordinate[1])**2 + \
+                if np.sqrt((item[0]-coordinate[0])**2 +
+                           (item[1]-coordinate[1])**2 +
                            (item[2]-coordinate[2])**2) >= 2*radius:
                     check += 0
                 else:
-                    check +=1
+                    check += 1
 
             if check == 0:
                 spheres.append(coordinate)
@@ -64,8 +57,12 @@ class Box:
         ax = fig.add_subplot(111, projection='3d')
         for coordinate in self.coordinates:
             ax.scatter(coordinate[0], coordinate[1], coordinate[2], c='blue')
-            (xs,ys,zs) = drawSphere(coordinate[0], coordinate[1], coordinate[2], coordinate[3])
-            ax.plot_wireframe(xs, ys, zs)
+
+            (xs, ys, zs) = drawSphere(coordinate[0],
+                                      coordinate[1],
+                                      coordinate[2],
+                                      coordinate[3])
+            ax.plot_surface(xs, ys, zs)
 
         if hasattr(self, "plane"):
             ax.plot_surface(self.plane[0], self.plane[1], self.plane[2])
@@ -113,35 +110,12 @@ class Box:
         self.centres = centres
         self.crossSections = radii
 
-    # def calcCrossSections(self):
-
-    #     radii = []
-
-    #     for coordinate in self.coordinates:
-    #         # x0 = coordinate[0]
-    #         # y0 = coordinate[1]
-    #         z0 = coordinate[2]
-    #         r = coordinate[3]
-
-    #         if z0 < 10:
-    #             if z0 + 0.7 >= 10:
-    #                 # tmp = np.sqrt(r**2 - ((A*x0 + B*y0 + C*z0 -D)**2)/(A**2 + B**2 + C**2))
-    #                 h = r - 10 + z0
-    #                 tmp = np.sqrt(2*r*h - h**2)
-    #                 radii.append(tmp)
-
-    #         if z0 > 10:
-    #             if z0 - 0.7 <= 10:
-    #                 # tmp = np.sqrt(r**2 - ((A*x0 + B*y0 + C*z0 -D)**2)/(A**2 + B**2 + C**2))
-    #                 h = r + 10 - z0
-    #                 tmp = np.sqrt(2*r*h - h**2)
-    #                 radii.append(tmp)
-
-    #     self.crossSections = radii
-
     def saveState(self):
         with open('population.dat', 'w') as f:
             csv.writer(f, delimiter=',').writerows(self.coordinates)
+
+    def loadState(self, f):
+        self.coordinates = np.loadtxt(f, dtype=float, delimiter=',')
 
 
 def drawSphere(xCenter, yCenter, zCenter, r):
