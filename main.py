@@ -8,8 +8,7 @@ def psi(x, R0):
 
 
 def plotHist(data, R0, nbins=10):
-    hist = plt.hist(data, nbins)
-    plt.clf()
+    hist = plt.hist(data, nbins, normed=True)
 
     x = np.linspace(0, max(hist[1]), 1000)
     y = psi(x, R0)
@@ -19,8 +18,8 @@ def plotHist(data, R0, nbins=10):
 
 
 if __name__ == '__main__':
-    box = Box(10)
-    box.populate(0.5, 20)
+    box = Box(20)
+    box.populate(0.7, 100)
 
     box.addPlane(0, 1, -1, 0)
     box.plotBox()
