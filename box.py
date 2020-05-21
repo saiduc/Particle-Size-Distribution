@@ -9,11 +9,7 @@ class Box:
     Takes input: boxLength
     """
     def __init__(self, boxLength):
-        super(Box, self).__init__()
         self.boxLength = boxLength
-        self.sphereRadius = 0
-        self.N = 0
-        self.coordinates = []
 
     def populate(self, radius, numberSpheres):
 
@@ -54,7 +50,14 @@ class Box:
         ax = fig.add_subplot(111, projection='3d')
         for coordinate in self.coordinates:
             ax.scatter(coordinate[0], coordinate[1], coordinate[2], c='blue')
+
+        if hasattr(self, "plane"):
+            ax.plot_surface(self.plane[0], self.plane[1], self.plane[2])
+
         plt.show()
 
-    def addPlace(self):
-        pass
+    def addPlane(self):
+        (x, y, z) = np.meshgrid(np.arange(0, self.boxLength+0.1, 1),
+                                np.arange(0, self.boxLength+0.1, 1))
+        z = x+y
+        self.plane = [x, y, z]
