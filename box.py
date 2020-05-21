@@ -1,4 +1,5 @@
 import numpy as np
+import csv
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 
@@ -15,7 +16,7 @@ class Box:
 
         self.N = numberSpheres
 
-        if self.boxLength < 2 * self.sphereRadius:
+        if self.boxLength < 2 * radius:
             print("box too small")
             return
 
@@ -46,8 +47,8 @@ class Box:
             #         check += 1
             for item in spheres:
                 if np.sqrt((item[0]-coordinate[0])**2 + \
-                           (item[1]+coordinate[1])**2 + \
-                           (item[2]+coordinate[2])**2) >= 2*radius:
+                           (item[1]-coordinate[1])**2 + \
+                           (item[2]-coordinate[2])**2) >= 2*radius:
                     check += 0
                 else:
                     check +=1
@@ -63,7 +64,7 @@ class Box:
         ax = fig.add_subplot(111, projection='3d')
         for coordinate in self.coordinates:
             ax.scatter(coordinate[0], coordinate[1], coordinate[2], c='blue')
-            (xs,ys,zs) = drawSphere(coordinate[0], coordinate[1], coordinate[2],self.sphereRadius)
+            (xs,ys,zs) = drawSphere(coordinate[0], coordinate[1], coordinate[2], coordinate[3])
             ax.plot_wireframe(xs, ys, zs)
 
         if hasattr(self, "plane"):
@@ -138,16 +139,17 @@ class Box:
 
     #     self.crossSections = radii
 
+    def saveState(self):
+        with open('population.dat', 'w') as f:
+            csv.writer(f, delimiter=',').writerows(self.coordinates)
 
 
 def drawSphere(xCenter, yCenter, zCenter, r):
-    #draw sphere
     u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-    x=np.cos(u)*np.sin(v)
-    y=np.sin(u)*np.sin(v)
-    z=np.cos(v)
-    # shift and scale sphere
+    x = np.cos(u)*np.sin(v)
+    y = np.sin(u)*np.sin(v)
+    z = np.cos(v)
     x = r*x + xCenter
     y = r*y + yCenter
     z = r*z + zCenter
-    return (x,y,z)
+    return (x, y, z)
