@@ -16,7 +16,6 @@ def plotHist(data, R0, nbins=10):
 
     plt.show()
 
-
 if __name__ == '__main__':
     box = Box(20)
     box.populate(0.7, 100)
