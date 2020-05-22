@@ -29,7 +29,7 @@ class Box:
         spheres = [coordinate]
 
         count = 0
-        while len(spheres) < self.N and count < 10000000:
+        while len(spheres) < self.N and count < 1000000:
             count += 1
             coordinate = np.array(
                 [np.random.uniform(radius, self.boxLength-radius),
@@ -78,6 +78,8 @@ class Box:
 
         z = (A*x + B*y - D)/(-C)
         self.plane = [x, y, z]
+
+        self.planeArea = 0
 
     def calcCrossSections(self):
 

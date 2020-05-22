@@ -8,10 +8,20 @@ def psi(x, R0):
 
 
 def plotHist(data, R0, nbins=10):
-    hist = plt.hist(data, nbins, normed=True)
+    # get histogram
+    hist = plt.hist(data, nbins, align='mid', normed=False)
+    plt.clf()
 
-    x = np.linspace(0, max(hist[1]), 1000)
+    # plot x and y from experiment
+    x = hist[1][:-1]
+    y = hist[0][:]
+    plt.plot(x, y, marker="x", linestyle="")
+
+    # plot x and y from theory
+    x = np.linspace(0, R0, 1000)
     y = psi(x, R0)
+    x = x[:-1]
+    y = y[:-1]
     plt.plot(x, y)
 
     plt.show()
@@ -19,15 +29,15 @@ def plotHist(data, R0, nbins=10):
 
 if __name__ == '__main__':
     box = Box(20)
-    box.populate(0.7, 500)
+    radius = 0.3
+    box.populate(radius, 2500)
 
-    box.addPlane(0, 1, -1, 0)
-    # box.plotBox()
+    box.addPlane(0, 0, 1, 10)
 
     box.calcCrossSections()
 
     crossSections = box.crossSections
-    print(crossSections)
+    print(len(crossSections))
     centres = box.centres
 
-    plotHist(crossSections, 0.7, 15)
+    plotHist(crossSections, radius, 25)
