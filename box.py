@@ -12,7 +12,9 @@ class Box:
     def __init__(self, boxLength):
         self.boxLength = boxLength
 
-    def populate(self, radius, numberSpheres):
+    def populate(self, r, numberSpheres, rand=0):
+
+        radius = r + np.random.uniform(-rand, rand)
 
         self.N = numberSpheres
 
@@ -30,6 +32,9 @@ class Box:
 
         count = 0
         while len(spheres) < self.N and count < 1000000:
+
+            radius = r + np.random.uniform(-rand, rand)
+
             count += 1
             coordinate = np.array(
                 [np.random.uniform(radius, self.boxLength-radius),
@@ -41,7 +46,8 @@ class Box:
             for item in spheres:
                 if np.sqrt((item[0]-coordinate[0])**2 +
                            (item[1]-coordinate[1])**2 +
-                           (item[2]-coordinate[2])**2) > 2*radius:
+                           (item[2]-coordinate[2])**2) > \
+                           (item[3]+coordinate[3]):
                     check += 0
                 else:
                     check += 1
