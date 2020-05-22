@@ -58,10 +58,10 @@ class Box:
         for coordinate in self.coordinates:
             ax.scatter(coordinate[0], coordinate[1], coordinate[2], c='blue')
 
-            (xs, ys, zs) = drawSphere(coordinate[0],
-                                      coordinate[1],
-                                      coordinate[2],
-                                      coordinate[3])
+            (xs, ys, zs) = self.drawSphere(coordinate[0],
+                                           coordinate[1],
+                                           coordinate[2],
+                                           coordinate[3])
             ax.plot_surface(xs, ys, zs)
 
         if hasattr(self, "plane"):
@@ -78,8 +78,6 @@ class Box:
 
         z = (A*x + B*y - D)/(-C)
         self.plane = [x, y, z]
-
-        self.planeArea = 0
 
     def calcCrossSections(self):
 
@@ -119,13 +117,12 @@ class Box:
     def loadState(self, f):
         self.coordinates = np.loadtxt(f, dtype=float, delimiter=',')
 
-
-def drawSphere(xCenter, yCenter, zCenter, r):
-    u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-    x = np.cos(u)*np.sin(v)
-    y = np.sin(u)*np.sin(v)
-    z = np.cos(v)
-    x = r*x + xCenter
-    y = r*y + yCenter
-    z = r*z + zCenter
-    return (x, y, z)
+    def drawSphere(self, xCenter, yCenter, zCenter, r):
+        u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
+        x = np.cos(u)*np.sin(v)
+        y = np.sin(u)*np.sin(v)
+        z = np.cos(v)
+        x = r*x + xCenter
+        y = r*y + yCenter
+        z = r*z + zCenter
+        return (x, y, z)
