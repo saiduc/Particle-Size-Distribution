@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 from scipy.integrate import trapz
+import math
 warnings.filterwarnings("ignore")
 
 
@@ -67,8 +68,14 @@ def psi2Sai(x, R1, R2, dR):
     m = int(round(x/dR))
     tmp = []
     # for n in range(m+1, N+1):
+
     for n in range(int(round(R1/dR)), N+1):
         tmp.append(dR * m / np.sqrt(n**2 - m**2))
+
+    if np.sum(tmp) == np.inf or math.isnan(np.sum(tmp)):
+        tmp = []
+        for n in range(m+1, N+1):
+            tmp.append(dR * m / np.sqrt((n**2 - m**2)))
 
     print(np.sum(tmp))
     return np.sum(tmp)
