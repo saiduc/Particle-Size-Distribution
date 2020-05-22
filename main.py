@@ -19,19 +19,19 @@ def psi(x, R0):
 #     items = []
 #     deltaR = 0.01
 #     N = int((R2 - R1)/deltaR)
+
 #     for n in range(int(R1/deltaR), int(R2/deltaR)):
 #         items.append(x/np.sqrt(n**2 * deltaR**2 - x**2))
-
 #     return np.sum(items)
 
 # def func(R, x):
-#     return x * np.sqrt(R**2 - x**2)
+#     return x / np.sqrt(R**2 - x**2)
 
 
 # def psi2(x, R1, R2):
 #     R = np.linspace(R1, R2, 1000)
 #     y = func(R, x)
-#     i = trapz(y, R, dx=0.01)
+#     i = trapz(y, R, dx=0.001)
 #     return i
 
 # def Amn(n, m, dR):
@@ -48,6 +48,31 @@ def psi(x, R0):
 #         tmp += Amn(n, m, dR)
 #     return tmp
 
+# def psi2Sai(m, R1, R2, dR):
+#     N = int((R2 - R1)/dR)
+#     tmp = []
+#     for n in range(int(m)+1, N+1):
+#         tmp.append(dR * m / np.sqrt(n**2 - m**2))
+#     return np.sum(tmp)
+
+
+# def psiTaylor(x, R1, R2):
+#     a = x * np.log(np.sqrt(R2**2) + R2) - x**3 / (2 * R2*(np.sqrt(R2**2) + R2))
+#     b = x * np.log(np.sqrt(R1**2) + R1) - x**3 / (2 * R1*(np.sqrt(R1**2) + R1))
+#     return a-b
+
+
+def psi2Sai(x, R1, R2, dR):
+    N = int(round(R2/dR))
+    m = int(round(x/dR))
+    tmp = []
+    # for n in range(m+1, N+1):
+    for n in range(int(round(R1/dR)), N+1):
+        tmp.append(dR * m / np.sqrt(n**2 - m**2))
+
+    print(np.sum(tmp))
+    return np.sum(tmp)
+
 
 def plotHist(data, R0, nbins=10, rand=0):
     # get histogram
@@ -57,6 +82,7 @@ def plotHist(data, R0, nbins=10, rand=0):
     # plot x and y from experiment
     x = hist[1][:-1]
     y = hist[0][:]
+    y = y/np.sum(y)
     plt.plot(x, y, marker="x", linestyle="")
 
     # plot x and y from theory
@@ -70,13 +96,13 @@ def plotHist(data, R0, nbins=10, rand=0):
     if rand != 0:
         R1 = R0 - rand
         R2 = R0 + rand
+        dR = 0.01
+
         x = np.linspace(0, R2, 1000)
         y = []
         for i in x:
-            y.append(psi2(i, R1, R2, 0.1))
-        
-        x = x[:-30]
-        y = y[:-30]
+            y.append(psi2Sai(i, R1, R2, dR))
+
         plt.plot(x, y)
 
     plt.show()
