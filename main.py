@@ -22,14 +22,12 @@ def plotHist(data, R0, nbins=10, rand=0):
     hist = plt.hist(data, nbins, align='mid')
     plt.clf()
 
-    # plot x and y from experiment
-    x = hist[1][:-1]
-    y = hist[0][:]
-    y = y/np.sum(y)
-    plt.plot(x, y, marker="x", linestyle="")
-
-    # plot x and y from theory
     if rand == 0:
+        x = hist[1][:-1]
+        y = hist[0][:]
+        # y = y/np.sum(y)
+        plt.plot(x, y, marker="x", linestyle="")
+        
         x = np.linspace(0, R0, 1000)
         y = psi(x, R0)
         x = x[:-1]
@@ -37,6 +35,11 @@ def plotHist(data, R0, nbins=10, rand=0):
         plt.plot(x, y)
 
     if rand != 0:
+        x = hist[1][:-1]
+        y = hist[0][:]
+        y = y/np.sum(y)
+        plt.plot(x, y, marker="x", linestyle="")
+
         R1 = R0 - rand
         R2 = R0 + rand
         x = np.linspace(0, R2, 1000)
@@ -49,7 +52,8 @@ def plotHist(data, R0, nbins=10, rand=0):
 if __name__ == '__main__':
     box = Box(20)
     radius = 0.3
-    box.populate(radius, 2500, rand=0.05)
+    rand = 0.05
+    box.populate(radius, 3500, rand=rand)
 
     box.addPlane(0, 0, 1, 10)
 
@@ -59,4 +63,5 @@ if __name__ == '__main__':
     print(len(crossSections))
     centres = box.centres
 
-    plotHist(crossSections, radius, 25, rand=0.05)
+    plotHist(crossSections, radius, 25, rand=rand)
+    box.saveState()
