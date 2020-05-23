@@ -2,6 +2,13 @@ import numpy as np
 import csv
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
+import matplotlib
+
+font = {'family': 'normal',
+        'weight': 'bold',
+        'size': 18}
+
+matplotlib.rc('font', **font)
 
 
 class Box:
@@ -58,7 +65,18 @@ class Box:
         print("placed", len(spheres), "balls")
         self.coordinates = spheres
 
+    def placeSphere(self, x, y, z, r):
+        if hasattr(self, "coordinates"):
+            self.coordinates.append([x, y, z, r])
+        else:
+            self.coordinates = []
+            self.coordinates.append([x, y, z, r])
+
     def plotBox(self):
+
+        plt.rc('text', usetex=True)
+        plt.rc('font', family='serif')
+
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
         for coordinate in self.coordinates:
@@ -75,6 +93,8 @@ class Box:
         ax.set_xlabel('x')
         ax.set_ylabel('y')
         ax.set_zlabel('z')
+        plt.tight_layout()
+        # plt.savefig("./Figures/box3d.pdf")
         plt.show()
 
     def addPlane(self, A, B, C, D):
