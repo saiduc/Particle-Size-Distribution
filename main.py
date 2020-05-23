@@ -40,7 +40,7 @@ def plotHist(data, R0, nbins=10, rand=0):
         R1 = R0 - rand
         R2 = R0 + rand
         x = np.linspace(0, R2, 1000)
-        y = psi2(x, R1, R2)
+        y = psi2(x, R1, R2)/2
         plt.plot(x, y)
 
     plt.show()
