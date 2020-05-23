@@ -11,6 +11,7 @@ font = {'family': 'normal',
 
 matplotlib.rc('font', **font)
 
+
 def psi(x, R0):
     return x * (R0**2 - x**2)**(-0.5)
 
@@ -46,7 +47,7 @@ def plotHist(data, R0, nbins=10, rand=0):
 
         # plt.legend()
         # plt.tight_layout()
-        # plt.savefig("./Figures/750_07.pdf")
+        # plt.savefig("./Figures/750_07_Noise_10.pdf")
 
     if rand != 0:
         x = hist[1][:-1]
@@ -110,23 +111,27 @@ def plotCircles():
     plt.show()
 
 
-plotCircles()
+def randomiseCrossSection(crossSections, noise):
+    tmp = []
+    for i in crossSections:
+        i += np.random.uniform(-noise, noise)
+        tmp.append(i)
+    return np.array(tmp)
 
 
 if __name__ == '__main__':
-    # box = Box(10)
-    # radius = 1
+# if True:
+    box = Box(20)
+    radius = 0.7
 
-    # rand = 0.00
-    # box.populate(radius, 5, rand=rand)
+    rand = 0.00
+    box.populate(radius, 750, rand=rand)
 
-    # box.addPlane(0, 0, 1, 5)
+    box.addPlane(0, 0, 1, 10)
 
-    # box.calcCrossSections()
+    box.calcCrossSections()
 
-    # crossSections = np.array(box.crossSections)
-    # print(len(crossSections))
-    # centres = box.centres
+    crossSections = np.array(box.crossSections)
+    print(len(crossSections))
 
-    # plotHist(crossSections, radius, int(len(crossSections)), rand=rand)
-    plotCircles()
+    plotHist(crossSections, radius, int(len(crossSections)), rand=rand)
