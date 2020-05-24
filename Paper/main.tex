@@ -12,7 +12,7 @@
 % \usepackage[caption=false]{subfig}
 \usepackage{todonotes}
 
-% \bibliography{example_bib.bib}
+\bibliography{ParticleSizeDistribution.bib}
 
 \begin{document}
 
@@ -56,11 +56,11 @@ material.
 
 Mathematically, determining the distribution of spherical particles from planar
 sections is a well known problem called Wicksell's Corpuscle Problem
-\todo{cite}, named after S. D. Wicksell, who solved the problem in 1925. With
+\cite{DWicksell}, named after S. D. Wicksell, who solved the problem in 1925. With
 this solution, it is possible to determine the original distribution of
 spherical particles. Thus, it is possible to determmine the distribution of
 particle sizes in a solid from its observed cross-section, allowing us to
-identify and classify materials better \todo{nasa}.
+identify and classify materials better \cite{Cuzzi2016}.
 
 In this paper we aim to show that it is possible to reproduce theoretical
 results on cross-sectional distributions using numerical simulation, and it is
@@ -100,7 +100,7 @@ distributed randomly in a cube of length 20. The plane is shown in blue, and can
 be seen intersecting many of the spheres in the cube.
 
 In order to obtain the planar cross-section, we employed the spherical cap
-method \todo{cite}. If we consider a sphere with centre
+method \cite{Sykes1922}. If we consider a sphere with centre
 $\overrightarrow{\textbf{c}_0} = (x_0, y_0, z_0)$ and radius $R$, and a plane
 with equation $Ax + By + Cz = D$ such that $\overrightarrow{\textbf{n}} = (A, B,
 C)$ is the normal vector to the plane, then the distance from the centre of the
@@ -143,7 +143,7 @@ observed circular radii are binned to produce a distribution.
 If $f(R)dR$ is the number of spheres per unit volume with radii in interval $[R,
 R + dR]$, then we can define a distribution $\phi(x)dx$ which represents the
 number of circles per unit area on the plane with radii in interval $[x,
-x+dx]$ \todo{cite}. This distribution is given by:
+x+dx]$ \cite{Kiderlen2011}. This distribution is given by:
 \begin{equation}
 \phi(x) = \int_{x}^{\infty}\frac{xf(R)}{\sqrt{R^2 - x^2}}
 \label{eq:phi_OG}
@@ -165,7 +165,7 @@ $\delta(R-R_0)$ we find:
 where $H(R_0 - x)$ is the heaviside function, which ``turns on'' the
 distribution only for $x < R0$ as it is not possible to have a circular radius
 $x$ larger than the spherical radius. So we aim to see our experimental data
-reproduce this distribution \todo{cite}. We also investigated how changing the
+reproduce this distribution. We also investigated how changing the
 value of $R_0$ affects the experimental distribution.
 
 We next considered the case in which each sphere has a radius $R$ uniformly
@@ -335,7 +335,7 @@ are too large, while it is initially easy to place spheres, as more are placed,
 more coordinates must be randomly drawn before one if found for the next sphere
 to be placed into. It is also possible that the algorithm never finds a possible
 coordinate for later spheres. One possible solution to this may be to use a
-better placing algorithm. Choosing a tight packing algorithm \todo{cite} would
+better placing algorithm. Choosing a tight packing algorithm %\cite{Chen2001} would
 maximise the number of spheres of a given radius that can be placed. However,
 this would likely result in a less than random distribution of spheres if the
 spheres are all of identical sizes. This would likely cause some systematic
@@ -403,7 +403,7 @@ However, it would be more prudent to use a Gaussian distribution to draw the
 values of the noise. This is because it is likely that the many sources of error
 possible in an experimental measurement of particle cross-sections in a material
 will be convoluted together into a Gaussian distribution of errors due to the
-central limit theorem \todo{cite}. 
+central limit theorem \cite{Islam2018}. 
 
 \section{Conclusions}
 In this investigation we showed that it is possible to reproduce expected planar
