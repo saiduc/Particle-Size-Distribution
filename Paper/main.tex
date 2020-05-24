@@ -26,17 +26,15 @@
 \maketitle
 
 \begin{abstract}
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  In this paper we present a 3-dimensional numerical simulation demonstrating
+  that it is possible to reproduce the known planar cross-section distributions
+  for Wicksell's Corpuscle Problem, thereby recovering 3D particle size
+  distributions from 2D cross-sections. We investigate the effects of different
+  particle sizes on the experimental data, and show this method is accurate for
+  2 different starting 3D size distributions. We also present our findings on
+  how sensitive this method is to experimental data and discuss its efficacy in
+  a real world application such as identifying a material using a planar
+  cross-section image from a microscope.
 \end{abstract}
 
 \section{Introduction}
@@ -83,7 +81,7 @@ checked against every existing sphere until a set of coordinates is drawn that
 ensures no overlap, at which point the sphere is placed in space and the process
 is repeated until all the necessary spheres have been placed.
 
-\begin{figure}[H]%[!ht]
+\begin{figure}%[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/box3d.pdf}
 \caption{$750$ spheres of radius 0.7 distributed randomly in a cube of length 20,
@@ -124,7 +122,7 @@ $\overrightarrow{\textbf{c}}$ of the circle visible on the plane using:
 y_0, z_0) + \rho\frac{(A, B, C)}{\sqrt{A^2 + B^2 + C^2}}
 \end{equation*}
 
-\begin{figure}[H]%[!ht]
+\begin{figure}%[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/circles.pdf}
 \caption{Planar cross-section constructed using mock data. Spheres cut by the
@@ -203,7 +201,7 @@ each in a cube of length $20$. In this case we found that a plane in a random
 orientation intersects very few spheres, since the spheres are very small. The
 planar distribution is presented in Figure~\ref{fig:size1}.
 
-\begin{figure}[H]%[!ht]
+\begin{figure}%[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_01.pdf}
 \caption{Distribution of circle radii on plane for $750$ spheres of radius $0.1$
@@ -231,7 +229,7 @@ by increasing the ratio of sphere occupied space to total box space. We thus
 next used $750$ spheres of radius $0.3$ each. The planar cross-sectional
 distribution found is presented in Figure~\ref{fig:size3}.
 
-\begin{figure}[H]%[!ht]
+\begin{figure}%[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_03.pdf}
 \caption{Distribution of circle radii on plane for $750$ spheres of radius $0.3$
@@ -254,12 +252,20 @@ difference between neighbouring bins. One method to solve this would be to use
 fewer bins, which would have the effect of ``summing and averaging''
 neighbouring bins so the experimental data has a smoother trend. However, this
 would also reduce the number of data points so it was not implemented in our
-investigation. 
+investigation.
 
+The sharp rise in the theoretical distribution close to the maximum radius is
+also clear in the experimental data. It can be understood intuitively that we
+expect to see more cross-sections with radius close to radius of the spheres
+since there is a greater probability of intersection with the centre of a sphere
+than any other point on the sphere.
 
+Increasing the size of the spheres further to a radius of $0.7$, we might
+initially expect the experimental data to resemble the theoretical distribution
+even more closely, but this is not what we see. Figure~\ref{fig:size7} presents
+the planar distribution for $750$ spheres of radius $0.7$ each.
 
-
-\begin{figure}[H]%[!ht]
+\begin{figure}%[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_07.pdf}
 \caption{Distribution of circle radii on plane for $750$ spheres of radius $0.7$
@@ -271,7 +277,40 @@ investigation.
 \end{center}
 \end{figure}
 
-\begin{figure}[H]%[!ht]
+In Figure~\ref{fig:size7}, we see a similar experimental distribution to that of
+Figure~\ref{fig:size3}, as opposed to a distribution that more closely resembles
+the theoretical distribution. While initially this may seem contrary to the
+notion that increasing size of spheres would increase the number of
+intersections and thus give a better distribution, this may simply be due to the
+fact that increasing the size of the spheres beyond a certain radius does not
+provide continually better results. We observe a similar number of intersections
+as the case with spheres of radius $0.3$, and thus it is possible to conclude
+that the best experimental distribution is found for a spherical size that
+ensures a significant number of intersections. Though continually increasing
+spherical size provides diminishing returns.
+
+Indeed, we found that making the sphere sizes much larger made the placing of
+the spheres in a finite space more difficult, and exponentially increased the
+time complexity of the placing algorithm. This is because if the placed spheres
+are too large, while it is initially easy to place spheres, as more are placed,
+more coordinates must be randomly drawn before one if found for the next sphere
+to be placed into. It is also possible that the algorithm never finds a possible
+coordinate for later spheres. One possible solution to this may be to use a
+better placing algorithm. Choosing a tight packing algorithm \todo{cite} would
+maximise the number of spheres of a given radius that can be placed. However,
+this would likely result in a less than random distribution of spheres if the
+spheres are all of identical sizes. This would likely cause some systematic
+error in the data, and so it was not investigated here. If we randomised the
+sizes of the spheres as we do in the next part of the investigation, the problem
+become significantly more complicated. Tight packing algorithms for irregular
+shaped objects are very difficult to create and computationally expensive
+\todo{cite}.
+
+We next randomised the radius of each sphere to be in the range $0.65 < R <
+0.75$. The experimental data for this simulation is presented in
+Figure~\ref{fig:random}.
+
+\begin{figure}%[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_07_random.pdf}
 \caption{Distribution of circle radii on plane for $750$ spheres of radius $R$
@@ -285,34 +324,44 @@ investigation.
 \end{center}
 \end{figure}
 
-% \begin{figure}[H]%[!ht]
-% \begin{center}
-% \includegraphics[width=0.45\textwidth]{./../Figures/750_07_NoNoise.pdf}
-% \caption{Illustrations, graphs, and photographs may fit across both columns, if
-%   necessary. Your artwork must be in place in the article.}
-% \label{fig:nonoise}
-% \end{center}
-% \end{figure}
+Figure~\ref{fig:random} presents the experimental data for 750 spheres with each
+sphere having a radius $0.65 < R < 0.75$. As we can see, the theoretical
+distribution has a very different shape to the case of constant sphere
+radius. We see that the theoretical distribution has a sharp peak centred around
+(but not precisely at) $0.65$, the lower limit of the uniform range the radii
+were drawn from, and a sharp decrease after this point. This is likely due to
+the higher number of spheres available in the box which could be intersected so
+as to show a planar cross-section with radius $\approx 0.65$. In a range of
+radii between $0.65 < R < 0.75$, all the spheres in the box can be intersected
+so as to produce a circle of radius $0.65$, but there will be fewer spheres
+which can be intersected to produce a circle of radius greater than this. So a
+peak at this point and then a sharp decrease is expected.
 
-% \begin{figure}[H]%[!ht]
-% \begin{center}
-% \includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_100.pdf}
-% \caption{Illustrations, graphs, and photographs may fit across both columns, if
-%   necessary. Your artwork must be in place in the article.}
-% \label{fig:2noise}
-% \end{center}
-% \end{figure}
+The experimental data resembles the theoretical distribution, clearly showing a
+peak and sharp decrease after. However, we also see that there is significant
+variance between bins, and there is a large scatter around the theoretical
+data. As explained for Figure~\ref{fig:size3}, it would be possible to reduce
+this fluctuation by using fewer bins, at the cost of having fewer data
+points. With a more powerful computer, or if the simulation is optimised and
+written with a compiled language, there is also scope for significantly
+increasing the size and number of spheres used, which would provide better
+experimental data.
 
-% \begin{figure}[H]%[!ht]
-% \begin{center}
-% \includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_10.pdf}
-% \caption{Illustrations, graphs, and photographs may fit across both columns, if
-%   necessary. Your artwork must be in place in the article.}
-% \label{fig:1noise}
-% \end{center}
-% \end{figure}
+While there is significant fluctuation and scatter in all of the simulations
+presented so far, the shapes of the distributions were mostly clear, and they
+resembled the theoretical distribution. However, if the system is very sensitive
+to experimental error, it may be difficult to identify distribution shapes, and
+thus prevent us from properly identifying the starting distribution of spherical
+radii. We therefore introduced some additional random error into the data. After
+the radii of the circles on the plane are calculated, a small random number is
+added to each radius. The random number is drawn from a uniform distribution in
+the range $[\frac{-r}{n}, \frac{r}{n}]$, where r is the circle's radius and n is
+the number of orders of magnitude we wish to choose the errors. We tested the
+system with errors 2 orders of magnitude smaller than the radii and 1 order of
+magnitude smaller than the radii. This is presented in
+Figure~\ref{fig:noiseplots}. 
 
-\begin{figure*}[ht!]
+\begin{figure*}%[ht!]
   \centering
   \subfloat[Noise 2 orders of magnitude smaller than radius]
   {\includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_100.pdf}
@@ -321,7 +370,7 @@ investigation.
   \subfloat[Noise 1 order of magnitude smaller than radius]
   {\includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_10.pdf}
   \label{fig:1noise}}
-  \caption{Distribution of circle radii on plane for $750$ balls of radius $0.7$
+  \caption{Distribution of circle radii on plane for $750$ spheres of radius $0.7$
     each. Each recorded radius has a random noise added to it in order to
     determine how sensitive the data is to experimental
     error. Figure~\ref{fig:2noise} shows the distribution for an added noise 2
@@ -334,8 +383,54 @@ investigation.
   \label{fig:noiseplots}
 \end{figure*}
 
+Figure~\ref{fig:2noise} presents the distribution for $750$ spheres or radius
+$0.7$ each, with an added ``noise'' that is 2 orders of magnitude smaller than
+each measured radius. We can see that the experimental data looks very similar
+to the data presented in Figure~\ref{fig:size7}. The shape of the distribution
+is also very clear and resembles the theoretical distribution.
+
+Figure~\ref{fig:1noise} presents the same simulation but with an added noise
+that is 1 order of magnitude smaller than each measured radius. Here we can see
+that the experimental data is unrecognisable, and the shape of the distribution
+is no longer clear. We thus conclude that the system is very sensitive to noise
+greater than 2 orders of magnitude compared to the measured data.
+
+However, it would be more prudent to use a Gaussian distribution to draw the
+values of the noise. This is because it is likely that the many sources of error
+possible in an experimental measurement of particle cross-sections in a material
+will be convoluted together into a Gaussian distribution of errors due to the
+central limit theorem \todo{cite}. 
+
 \section{Conclusions}
-Text
+In this investigation we showed that it is possible to reproduce expected planar
+distributions for the Corpuscle Problem with a 3-dimensional numerical
+simulation of spheres distributed randomly in space, where a plane oriented
+randomly intersects the spheres. We investigated how effective this method of
+simulation is for different particle sizes, and showed that while initially
+larger particles provide better data since they allow for more intersections,
+continually increasing particle size becomes ineffective and computationally
+expensive. 
+
+We showed it was possible to reproduce the expected planar distributions for two
+starting spherical radii distributions: a Dirac delta distribution, in which all
+the spheres have the same radius, and a bounded uniform distribution, in which
+all the spheres' radii are drawn randomly from a uniform distribution. Both
+produce different shaped planar distributions but both provide data that
+resembles the theoretical distributions.
+
+We also investigated how sensitive this method is to experimental error. We
+introduced some random noise into the system from a random uniform distribution
+and demonstrated that the system is very sensitive to noise greater than two
+orders of magnitude relative to measured data. Thus it is important for any
+experimentalist making measurements of particle cross-sections in a material to
+be very careful with error handling, as any error larger than 2 orders of
+magnitude compared to measured data will result in great difficulty in
+reproducing the spherical radii distributions.
+
+We therefore showed in this investigation that it is possible to use the known
+solutions to Wicksell's Corpuscle Problem to better identify and classify
+materials by using planar measurements to gain information about 3D particle
+distributions. 
 
 
 % if have a single appendix:
