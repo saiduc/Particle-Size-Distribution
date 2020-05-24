@@ -26,7 +26,17 @@
 \maketitle
 
 \begin{abstract}
-  Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
 \end{abstract}
 
 \section{Introduction}
@@ -58,6 +68,7 @@ thus possible to solve Wicksell's Corpuscle Problem in this manner.
 
 
 \section{Method}
+
 Consider many spheres of different radii distributed randomly in space. For the
 purposes of the numerical simulation, we will consider a cube of length 20. The
 spheres were not allowed to overlap, which we ensured by placing the spheres such
@@ -75,7 +86,7 @@ is repeated until all the necessary spheres have been placed.
 \begin{figure}[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/box3d.pdf}
-\caption{750 spheres of radius 0.7 distributed randomly in a cube of length 20,
+\caption{$750$ spheres of radius 0.7 distributed randomly in a cube of length 20,
   such that no sphere is touching or overlapping another sphere. A randomly
   oriented plane passes through the box and ``cuts'' through the
   spheres.}\label{fig:3dplot_plane}
@@ -84,7 +95,7 @@ is repeated until all the necessary spheres have been placed.
 
 We then placed a plane into the cube, with a random orientation. The plane will
 ``cut'' through many of the spheres in the cube. This is shown in
-Figure~\ref{fig:3dplot_plane}. Here we see 750 spheres, each with radius 0.7
+Figure~\ref{fig:3dplot_plane}. Here we see $750$ spheres, each with radius 0.7
 distributed randomly in a cube of length 20. The plane is shown in blue, and can
 be seen intersecting many of the spheres in the cube.
 
@@ -181,22 +192,21 @@ Since this distribution produces complex numbers for $ x < R_1$, we only
 consider the real part of this distribution, which appears to produce a peak at
 $x = R_1$.
 
-\section{Results}
-Text
+\section{Results and Discussion}
 
-% \begin{figure}[H]%[!ht]
-% \begin{center}
-% \includegraphics[width=0.45\textwidth]{./../Figures/box3d_noplane.pdf}
-% \caption{Spheres of radius 0.7 distributed randomly in a cube of length 20, such
-%   that no sphere is touching or overlapping another sphere.}
-% \label{fig:3dplot}
-% \end{center}
-% \end{figure}
+We found that for both the case of the spheres of constant radius, and the case
+of the spheres of varying radius, the experimental data reproduced a
+distribution in the same shape as the theoretical distribution.
+
+We first investigated the case where we placed $750$ spheres of radius $0.1$
+each in a cube of length $20$. In this case we found that a plane in a random
+orientation intersects very few spheres, since the spheres are very small. The
+planar distribution is presented in Figure~\ref{fig:size1}.
 
 \begin{figure}[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_01.pdf}
-\caption{Distribution of circle radii on plane for 750 spheres of radius $0.1$
+\caption{Distribution of circle radii on plane for $750$ spheres of radius $0.1$
   each. There are relatively few points since the spheres are small, so there is
   relatively small chance that they will be cut by the plane. So only a few
   circles are visible on the plane. The theoretical distribution is shown, with
@@ -205,10 +215,26 @@ Text
 \end{center}
 \end{figure}
 
+We observe relatively few experimental data points, as there were relatively few
+intersections with the plane. This was likely because the spheres' radii were
+very small compared to box length and there were relatively few spheres. While
+the theoretical distribution shows a strong increase near $0.1$, this is not
+evident from the experimental data. We also see that there is a lot of variance
+between the points so the slow rise evident in the theoretical distribution is
+not clear in the experimental data. It is thus necessary that we have more
+spheres that intersect with the plane, in order to obtain a larger data-set.
+
+We found that increasing the spheres' size or placing more spheres in the box,
+or making the box length smaller, are all good methods of increasing the number
+of intersections we observe, as they all increase the likelihood of intersection
+by increasing the ratio of sphere occupied space to total box space. We thus
+next used $750$ spheres of radius $0.3$ each. The planar cross-sectional
+distribution found is presented in Figure~\ref{fig:size3}.
+
 \begin{figure}[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_03.pdf}
-\caption{Distribution of circle radii on plane for 750 spheres of radius $0.3$
+\caption{Distribution of circle radii on plane for $750$ spheres of radius $0.3$
   each. Compared to Figure~\ref{fig:size1}, there are many more experimental data
   points, since it is more likely that the plane will intersect these larger
   spheres. The experimental data more clearly resembles the theoretical
@@ -217,10 +243,26 @@ Text
 \end{center}
 \end{figure}
 
+In Figure~\ref{fig:size3} we see that there are clearly more experimental data
+points. This is because more spheres had intersections with the plane. Compared
+to Figure~\ref{fig:1noise}, the slow rise in the theoretical distribution is
+more closely followed by the experimental data. However, we still encounter
+significant variance and fluctuation in lower radius bins, even though the
+theoretical data is a smooth gradual increase. This is likely due to the
+relatively few number of circles populating these bins, causing greater relative
+difference between neighbouring bins. One method to solve this would be to use
+fewer bins, which would have the effect of ``summing and averaging''
+neighbouring bins so the experimental data has a smoother trend. However, this
+would also reduce the number of data points so it was not implemented in our
+investigation. 
+
+
+
+
 \begin{figure}[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_07.pdf}
-\caption{Distribution of circle radii on plane for 750 spheres of radius $0.7$
+\caption{Distribution of circle radii on plane for $750$ spheres of radius $0.7$
   each. We do not observe much difference in how well the experimental data
   resembles the theoretical distribution between this figure and
   Figure~\ref{fig:size3}. With larger sized spheres, the simulation becomes harder
@@ -232,8 +274,8 @@ Text
 \begin{figure}[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_07_random.pdf}
-\caption{Distribution of circle radii on plane for 750 spheres of radius $R$
-  where $0.65 < R < 0.7$. The theoretical distribution is now different,
+\caption{Distribution of circle radii on plane for $750$ spheres of radius $R$
+  where $0.65 < R < 0.75$. The theoretical distribution is now different,
   although the experimental data still resembles this new distribution, showing
   a maximum around $R = 0.7$ and a sharp decrease after this. This is likely
   because there are more spheres with radii such that an overlap between $0$ and
@@ -279,7 +321,7 @@ Text
   \subfloat[Noise 1 order of magnitude smaller than radius]
   {\includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_10.pdf}
   \label{fig:1noise}}
-  \caption{Distribution of circle radii on plane for 750 balls of radius $0.7$
+  \caption{Distribution of circle radii on plane for $750$ balls of radius $0.7$
     each. Each recorded radius has a random noise added to it in order to
     determine how sensitive the data is to experimental
     error. Figure~\ref{fig:2noise} shows the distribution for an added noise 2
@@ -292,9 +334,8 @@ Text
   \label{fig:noiseplots}
 \end{figure*}
 
-\section{Discussion and Summary}
+\section{Conclusions}
 Text
-
 
 
 % if have a single appendix:
@@ -310,9 +351,9 @@ Text
 % \subsection or using \label (\appendices by itself
 % starts a section numbered zero.)
 %
-\appendices{}
-\section{Appendix Name}
-Text
+% \appendices{}
+% \section{Appendix Name}
+% Text
 
 \printbibliography{}
 \end{document}
