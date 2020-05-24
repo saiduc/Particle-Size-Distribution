@@ -6,7 +6,10 @@
 \usepackage{graphicx}
 \usepackage{float}
 
-\usepackage[caption=false]{subfig}
+\usepackage{blindtext, subfig}
+\usepackage{dblfloatfix}
+
+% \usepackage[caption=false]{subfig}
 \usepackage{todonotes}
 
 % \bibliography{example_bib.bib}
@@ -20,7 +23,6 @@
         
 % The report headers
 \markboth{PHYS6017 Computer Techniques in Physics Report 2, May 2020}
-% do not delete next lines
 {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
 
 \maketitle
@@ -260,11 +262,6 @@ expect to see more cross-sections with radius close to radius of the spheres
 since there is a greater probability of intersection with the centre of a sphere
 than any other point on the sphere.
 
-Increasing the size of the spheres further to a radius of $0.7$, we might
-initially expect the experimental data to resemble the theoretical distribution
-even more closely, but this is not what we see. Figure~\ref{fig:size7} presents
-the planar distribution for $750$ spheres of radius $0.7$ each.
-
 \begin{figure}%[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/750_07.pdf}
@@ -277,6 +274,47 @@ the planar distribution for $750$ spheres of radius $0.7$ each.
 \end{center}
 \end{figure}
 
+\begin{figure}[H]%[!ht]
+\begin{center}
+\includegraphics[width=0.45\textwidth]{./../Figures/750_07_random.pdf}
+\caption{Distribution of circle radii on plane for $750$ spheres of radius $R$
+  where $0.65 < R < 0.75$. The theoretical distribution is now different,
+  although the experimental data still resembles this new distribution, showing
+  a maximum around $R = 0.7$ and a sharp decrease after this. This is likely
+  because there are more spheres with radii such that an overlap between $0$ and
+  $0.7$ is possible, and relatively few spheres with radii such that a larger
+  overlap is possible.}
+\label{fig:random}
+\end{center}
+\end{figure}
+
+\begin{figure*}[ht!]
+  \centering
+  \subfloat[Noise 2 orders of magnitude smaller than radius]
+  {\includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_100.pdf}
+  \label{fig:2noise}}
+  \centering
+  \subfloat[Noise 1 order of magnitude smaller than radius]
+  {\includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_10.pdf}
+  \label{fig:1noise}}
+  \caption{Distribution of circle radii on plane for $750$ spheres of radius $0.7$
+    each. Each recorded radius has a random noise added to it in order to
+    determine how sensitive the data is to experimental
+    error. Figure~\ref{fig:2noise} shows the distribution for an added noise 2
+    orders of magnitude smaller than the recorded radius, while
+    Figure~\ref{fig:1noise} is the same for noise 1 order of magnitude smaller. As
+    we can see, the experimental data very resembles the theoretical
+    distribution when noise of 2 orders of magnitude smaller are added. But this
+    is not true when noise of 1 order of magnitude smaller is added, implying
+    the data is very sensitive to experimental data.}
+  \label{fig:noiseplots}
+\end{figure*}
+
+Increasing the size of the spheres further to a radius of $0.7$, we might
+initially expect the experimental data to resemble the theoretical distribution
+even more closely, but this is not what we see. Figure~\ref{fig:size7} presents
+the planar distribution for $750$ spheres of radius $0.7$ each.
+
 In Figure~\ref{fig:size7}, we see a similar experimental distribution to that of
 Figure~\ref{fig:size3}, as opposed to a distribution that more closely resembles
 the theoretical distribution. While initially this may seem contrary to the
@@ -288,6 +326,7 @@ as the case with spheres of radius $0.3$, and thus it is possible to conclude
 that the best experimental distribution is found for a spherical size that
 ensures a significant number of intersections. Though continually increasing
 spherical size provides diminishing returns.
+
 
 Indeed, we found that making the sphere sizes much larger made the placing of
 the spheres in a finite space more difficult, and exponentially increased the
@@ -309,20 +348,6 @@ shaped objects are very difficult to create and computationally expensive
 We next randomised the radius of each sphere to be in the range $0.65 < R <
 0.75$. The experimental data for this simulation is presented in
 Figure~\ref{fig:random}.
-
-\begin{figure}%[H]%[!ht]
-\begin{center}
-\includegraphics[width=0.45\textwidth]{./../Figures/750_07_random.pdf}
-\caption{Distribution of circle radii on plane for $750$ spheres of radius $R$
-  where $0.65 < R < 0.75$. The theoretical distribution is now different,
-  although the experimental data still resembles this new distribution, showing
-  a maximum around $R = 0.7$ and a sharp decrease after this. This is likely
-  because there are more spheres with radii such that an overlap between $0$ and
-  $0.7$ is possible, and relatively few spheres with radii such that a larger
-  overlap is possible.}
-\label{fig:random}
-\end{center}
-\end{figure}
 
 Figure~\ref{fig:random} presents the experimental data for 750 spheres with each
 sphere having a radius $0.65 < R < 0.75$. As we can see, the theoretical
@@ -361,27 +386,6 @@ system with errors 2 orders of magnitude smaller than the radii and 1 order of
 magnitude smaller than the radii. This is presented in
 Figure~\ref{fig:noiseplots}. 
 
-\begin{figure*}%[ht!]
-  \centering
-  \subfloat[Noise 2 orders of magnitude smaller than radius]
-  {\includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_100.pdf}
-  \label{fig:2noise}}
-  \centering
-  \subfloat[Noise 1 order of magnitude smaller than radius]
-  {\includegraphics[width=0.45\textwidth]{./../Figures/750_07_Noise_10.pdf}
-  \label{fig:1noise}}
-  \caption{Distribution of circle radii on plane for $750$ spheres of radius $0.7$
-    each. Each recorded radius has a random noise added to it in order to
-    determine how sensitive the data is to experimental
-    error. Figure~\ref{fig:2noise} shows the distribution for an added noise 2
-    orders of magnitude smaller than the recorded radius, while
-    Figure~\ref{fig:1noise} is the same for noise 1 order of magnitude smaller. As
-    we can see, the experimental data very resembles the theoretical
-    distribution when noise of 2 orders of magnitude smaller are added. But this
-    is not true when noise of 1 order of magnitude smaller is added, implying
-    the data is very sensitive to experimental data.}
-  \label{fig:noiseplots}
-\end{figure*}
 
 Figure~\ref{fig:2noise} presents the distribution for $750$ spheres or radius
 $0.7$ each, with an added ``noise'' that is 2 orders of magnitude smaller than
@@ -431,24 +435,6 @@ We therefore showed in this investigation that it is possible to use the known
 solutions to Wicksell's Corpuscle Problem to better identify and classify
 materials by using planar measurements to gain information about 3D particle
 distributions. 
-
-
-% if have a single appendix:
-%\appendix[Proof of the Zonklar Equations]
-% or
-%\appendix  % for no appendix heading
-% do not use \section anymore after \appendix, only \section*
-% is possibly needed
-
-% use appendices with more than one appendix
-% then use \section to start each appendix
-% you must declare a \section before using any
-% \subsection or using \label (\appendices by itself
-% starts a section numbered zero.)
-%
-% \appendices{}
-% \section{Appendix Name}
-% Text
 
 \printbibliography{}
 \end{document}
