@@ -44,67 +44,65 @@
 \IEEEPARstart{I}{n} the world of Material Science and Crystallography, it is
 often the case that a material is identified and classified using the
 distribution of its constituent particle sizes. However, direct observation of
-the particles so as to construct a distribution is often impossible. Using a
-modern microscope or laser imaging techniques, it is possible to observe
-particles in a cross-section of material. But the observed radii of particles in
-this cross-section do not necessarily correspond directly to the radii of the
-particles in the material, since the plane of the cross-section is not
-necessarily oriented such that the observed particles lie exactly on the
-plane. Thus, it becomes difficult to relate the observed distribution of
-particle sizes in the plane to the real distribution of particle sizes in the
-material.
+the particles is often impossible. Using a modern microscope or laser imaging
+techniques, it is possible to observe particles in a cross-section of
+material. But the observed radii of particles in this cross-section do not
+necessarily correspond directly to the radii of the particles in the material,
+since the plane is not oriented such that it passes through the centre of all
+observed particles. Thus, it becomes difficult to relate the observed
+distribution of particle sizes in the plane to the real distribution of particle
+sizes in the material.
 
 Mathematically, determining the distribution of spherical particles from planar
 sections is a well known problem called Wicksell's Corpuscle Problem
-\cite{DWicksell}, named after S. D. Wicksell, who solved the problem in 1925. With
-this solution, it is possible to determine the original distribution of
-spherical particles. Thus, it is possible to determine the distribution of
+\cite{DWicksell}, named after S. D. Wicksell, who solved the problem in
+1925. With this solution, it is possible to determine the distribution of
 particle sizes in a solid from its observed cross-section, allowing us to
 identify and classify materials better \cite{Cuzzi2016}.
 
 In this paper we aim to show that it is possible to reproduce theoretical
-results on cross-sectional distributions using numerical simulation, and it is
+results for cross-sectional distributions using numerical simulation, and it is
 thus possible to solve Wicksell's Corpuscle Problem in this manner.
 
 
 \section{Method}
 
-Consider many spheres of different radii distributed randomly in space. For the
-purposes of the numerical simulation, we will consider a cube of length 20. The
-spheres were not allowed to overlap, which we ensured by placing the spheres such
-that if one sphere has vector position $\overrightarrow{\textbf{a}}$ and radius
-$r_{1}$ and the other has vector position $\overrightarrow{\textbf{b}}$ and
-radius $r_{2}$, the spheres must have positions such that:
+The numerical simulation of the 3D particle distribution was done using
+Python. It looked at many spheres of different radii, distributed randomly in
+space with a given "box of length 20. The spheres were not allowed to overlap,
+which we ensured by placing the spheres such that if one sphere has vector
+position $\overrightarrow{\textbf{a}}$ and radius $r_{1}$ and the other has
+vector position $\overrightarrow{\textbf{b}}$ and radius $r_{2}$, the spheres
+must have positions such that:
 \begin{equation*}
 |\overrightarrow{\textbf{a}} - \overrightarrow{\textbf{b}}| > (r_{1} + r_{2})
 \end{equation*}
-Random coordinates for a sphere are drawn from a uniform distribution and
-checked against every existing sphere until a set of coordinates is drawn that
-ensures no overlap, at which point the sphere is placed in space and the process
-is repeated until all the necessary spheres have been placed.
+Random coordinates for a sphere were drawn from a uniform distribution and
+checked against every existing sphere until a set of coordinates was drawn that
+ensures no overlap, at which point the sphere was placed in space and the process
+was repeated until all the necessary spheres have been placed.
 
 \begin{figure}%[H]%[!ht]
 \begin{center}
 \includegraphics[width=0.45\textwidth]{./../Figures/box3d.pdf}
 \caption{$750$ spheres of radius 0.7 distributed randomly in a cube of length 20,
-  such that no sphere is touching or overlapping another sphere. A randomly
-  oriented plane passes through the box and ``cuts'' through the
+  such that no sphere is touching or overlapping another sphere. A horizontal
+  plane, in blue, passes through the box and ``cuts'' through the
   spheres.}\label{fig:3dplot_plane}
 \end{center}
 \end{figure}
 
-We then placed a plane into the cube, with a random orientation. The plane will
-``cut'' through many of the spheres in the cube. This is shown in
-Figure~\ref{fig:3dplot_plane}. Here we see $750$ spheres, each with radius 0.7
-distributed randomly in a cube of length 20. The plane is shown in blue, and can
-be seen intersecting many of the spheres in the cube.
+We then placed a plane into the cube, with a random orientation, which
+``cuts'' through many of the spheres in the cube. This is shown in
+Figure~\ref{fig:3dplot_plane}, where we see a plane (in blue) intersecting 750
+spheres of constant radius, distributed at random in a box.
 
 In order to obtain the planar cross-section, we employed the spherical cap
 method \cite{Sykes1922}. If we consider a sphere with centre
 $\overrightarrow{\textbf{c}_0} = (x_0, y_0, z_0)$ and radius $R$, and a plane
 with equation $Ax + By + Cz = D$ such that $\overrightarrow{\textbf{n}} = (A, B,
 C)$ is the normal vector to the plane, then the distance from the centre of the
-circle to the closest point on the plane $p_0$ is given by $\rho$:
+circle to the closest point on the plane $\overrightarrow{\textbf{p}_0}$ is given by $\rho$:
 \begin{equation*}
 \rho = \frac{(\overrightarrow{\textbf{c}_0} - \overrightarrow{\textbf{p}_0}) \cdot{}
   \overrightarrow{\textbf{n}}}{|\overrightarrow{\textbf{n}}|} = \frac{Ax_0 +
@@ -129,8 +127,8 @@ y_0, z_0) + \rho\frac{(A, B, C)}{\sqrt{A^2 + B^2 + C^2}}
 \includegraphics[width=0.45\textwidth]{./../Figures/circles.pdf}
 \caption{Planar cross-section constructed using mock data. Spheres cut by the
   plane appear as circles on the plane, with radius dependent on the relative
-  position of the spheres to the plane. This distribution of circles can be
-  modelled.}\label{fig:circles}
+  position of the spheres to the plane. This distribution of the radii of the
+  circles can be modelled.}\label{fig:circles}
 \end{center}
 \end{figure}
 
@@ -163,10 +161,10 @@ $\delta(R-R_0)$ we find:
 \label{eq:phi_constant}
 \end{equation}
 where $H(R_0 - x)$ is the Heaviside function, which ``turns on'' the
-distribution only for $x < R0$ as it is not possible to have a circular radius
+distribution only for $x < R_0$ as it is not possible to have a circular radius
 $x$ larger than the spherical radius. So we aim to see our experimental data
-reproduce this distribution \cite{Kong2005}. We also investigated how changing the
-value of $R_0$ affects the experimental distribution.
+reproduce this distribution \cite{Kong2005}. We also investigated how changing
+the size of the spheres used in the simulation affects the experimental data.
 
 We next considered the case in which each sphere has a radius $R$ uniformly
 distributed in a range $R_1 < R < R_2$. In this case, we modify $f(R)$ in
@@ -344,10 +342,6 @@ sizes of the spheres as we do in the next part of the investigation, the problem
 become significantly more complicated. Tight packing algorithms for irregular
 shaped objects are very difficult to create and computationally expensive
 \cite{Ma2018}. 
-
-We next randomised the radius of each sphere to be in the range $0.65 < R <
-0.75$. The experimental data for this simulation is presented in
-Figure~\ref{fig:random}.
 
 Figure~\ref{fig:random} presents the experimental data for 750 spheres with each
 sphere having a radius $0.65 < R < 0.75$. As we can see, the theoretical
