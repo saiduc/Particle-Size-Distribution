@@ -1,22 +1,22 @@
 #+TITLE: Investigating Particle Size Distributions (Wicksell's Corpuscle Problem)
 
 This repository hosts my project for the PHYS6017 Computer Techniques in Physics
-module, which I completed as part of my MPhys Astrophysics degree. The project
+module, which I completed as part of my BSc Physics degree. The project
 entailed randomly distributing spheres in space, allowing a plane to cut through
 them, and analysing the cross-sections of the spheres on the plane. 
 
 This project was completed using Python 3.
 
 * Usage
-
-Run the main.py file however you normally run Python files.
+Run the main.py file however you normally run Python files. Usually:
+#+begin_src bash
+python3 main.py
+#+end_src
 
 * Requirements
-
 - Python 3
 - Numpy
 - Matplotlib
 
 * License
-
-* Acknowledgements
+This project is licensed under the terms of the MIT license. Do whatever you want with it!
